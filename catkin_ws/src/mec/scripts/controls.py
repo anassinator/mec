@@ -11,9 +11,10 @@ from std_msgs.msg import Int16
 from geometry_msgs.msg import Twist
 
 
-left_motor = Motor(1.0)
-right_motor = Motor(1.3)
+left_motor = Motor(0.80)
+right_motor = Motor(1.0)
 servo = Servo()
+servo.angle = 110
 velocity = 255
 
 
