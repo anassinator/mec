@@ -27,9 +27,9 @@ void stopMotors() {
 void commandCallback( const mec::Command& msg){
   digitalWrite(LED_PIN,!digitalRead(LED_PIN));
   last_command = micros();
-  digitalWrite(IN1_PIN, msg.left_velocity > 0);
+  digitalWrite(IN1_PIN, msg.left_velocity < 0);
   analogWrite(IN2_PIN, abs(msg.left_velocity));
-  digitalWrite(IN3_PIN, msg.right_velocity > 0);
+  digitalWrite(IN3_PIN, msg.right_velocity < 0);
   analogWrite(IN4_PIN, abs(msg.right_velocity));
   servo.write(msg.servo);
 }
