@@ -2,8 +2,6 @@
 
 """MEC servo."""
 
-from std_msgs.msg import Int16
-
 
 class Servo(object):
 
@@ -22,9 +20,9 @@ class Servo(object):
     @angle.setter
     def angle(self, theta):
         if theta <= 0:
-            self.__angle = max(Servo.MIN_ANGLE, theta)
+            self.__angle = int(max(Servo.MIN_ANGLE, theta))
         else:
-            self.__angle = min(theta, Servo.MAX_ANGLE)
+            self.__angle = int(min(theta, Servo.MAX_ANGLE))
 
-    def serialize(self):
-        return Int16(self.__angle)
+    def to_msg(self):
+        return int(self.__angle)

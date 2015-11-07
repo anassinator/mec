@@ -26,11 +26,10 @@ void stopMotors() {
 
 void commandCallback( const mec::Command& msg){
   digitalWrite(LED_PIN,!digitalRead(LED_PIN));
-  last_command = micros();
-  digitalWrite(IN1_PIN,msg.left_velocity < 0);
-  analogWrite(IN2_PIN,msg.left_velocity & 0xFF);
-  digitalWrite(IN3_PIN,msg.right_velocity < 0);
-  analogWrite(IN4_PIN,msg.right_velocity & 0xFF);
+  digitalWrite(IN1_PIN, msg.left_velocity < 0);
+  analogWrite(IN2_PIN, msg.left_velocity);
+  digitalWrite(IN3_PIN, msg.right_velocity < 0);
+  analogWrite(IN4_PIN, msg.right_velocity);
   servo.write(msg.servo);
 }
 
@@ -52,7 +51,4 @@ void setup() {
 
 void loop() {
   nh.spinOnce();
-  if(last_command < micros() + COMMAND_TIMEOUT){
-    stopMotors();
-  }
 }
