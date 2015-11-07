@@ -1,0 +1,2 @@
+# mec
+McGill Engineering Competition
