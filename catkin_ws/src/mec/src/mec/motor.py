@@ -2,18 +2,26 @@
 
 """MEC motor."""
 
-from std_msgs.msg import Int16
-
 
 class Motor(object):
 
     """Motor class."""
 
-    MIN_VELOCITY = -255
+    MIN_VELOCITY = 0
     MAX_VELOCITY = 255
 
-    def __init__(self):
+    def __init__(self, tune):
+        self.tune = tune
         self.__velocity = 0
+        self.__direction = 1
+
+    def forward(self, v):
+        self.velocity = v
+        self.__direction = 1
+
+    def backward(self, v):
+        self.velocity = v
+        self.__direction = -1
 
     @property
     def velocity(self):
@@ -21,10 +29,13 @@ class Motor(object):
 
     @velocity.setter
     def velocity(self, v):
-        if v < 0:
-            self.__velocity = max(Motor.MIN_VELOCITY, v)
+        if v <= 0:
+            self.__velocity = int(max(Motor.MIN_VELOCITY, v))
         else:
-            self.__velocity = min(v, Motor.MAX_VELOCITY)
+            self.__velocity = int(min(v, Motor.MAX_VELOCITY))
 
-    def serialize(self):
-        return Int16(self.__velocity)
+    def stop(self):
+        self.__velocity = 0
+
+    def to_msg(self):
+        return int(self.tune * self.__direction * self.__velocity)
